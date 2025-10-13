@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include <queue>
+#include <deque>
 using namespace std;
 
 class ARX
@@ -9,15 +9,11 @@ private:
     vector<double> a;
     vector<double> b;
     double k;
-    queue<double> uHist;
-    queue<double> yHist;
+    deque<double> yHist;
+    deque<double> uHist;
+    deque<double> kBuffer;
 
 public:
     ARX(vector<double>, vector<double>, double);
-    double getFromQueue(queue<double>, int);
-    double Symuluj(double);
-    vector<double> getA()
-    {
-        return a;
-    }
+    double symuluj(double);
 };
