@@ -1,21 +1,24 @@
 #include "ARX.h"
 #include <iostream>
 #include <numeric>
+#include <cassert>
 
-ARX::ARX(vector<double> _a, vector<double> _b, double _k) : a(_a), b(_b), k(_k)
+ARX::ARX(vector<double> _a, vector<double> _b, int _k) : a(_a), b(_b), k(_k), generator(gen()), distribution{0.0, 0.01},
+                                                         stanSzumu(false), stanLimitow(true), uMin(-10.0), uMax(10.0), yMin(-10.0), yMax(10.0)
 {
-    for (int i = 0; i < _a.size(); i++)
-        yHist.push_front(0.0);
 
-    for (int i = 0; i < _b.size(); i++)
-        uHist.push_front(0.0);
+    yHist.assign(a.size(), 0.0);
 
-    for (int i = 0; i < k; i++)
-        kBuffer.push_front(0.0);
+    uHist.assign(b.size(), 0.0);
+
+    kBuffer.assign(k, 0.0);
 }
 
 double ARX::symuluj(double u)
 {
+    if (stanLimitow)
+        u = zastosujLimity(uMin, uMax, u);
+
     kBuffer.push_front(u);
     double uDelayed = kBuffer.back();
     kBuffer.pop_back();
@@ -29,7 +32,73 @@ double ARX::symuluj(double u)
     // obliczenie czesci przy a
     y -= std::inner_product(a.begin(), a.end(), yHist.begin(), 0.0);
 
+    if (stanSzumu)
+    {
+        y += generujSzum();
+    }
+
+    if (stanLimitow)
+        y = zastosujLimity(yMin, yMax, y);
+
     yHist.push_front(y);
     yHist.pop_back();
     return y;
+}
+
+double ARX::generujSzum()
+{
+    return distribution(generator);
+}
+
+double ARX::zastosujLimity(double min, double max, double wartosc)
+{
+    if (wartosc < min)
+        wartosc = min;
+    if (wartosc > max)
+        wartosc = max;
+    return wartosc;
+}
+
+void ARX::ustawParametry(vector<double> newA, vector<double> newB, int newK)
+{
+    a = newA;
+    b = newB;
+    k = newK;
+}
+
+void ARX::ustawA(vector<double> newA)
+{
+    a = newA;
+}
+
+void ARX::ustawB(vector<double> newB)
+{
+    b = newB;
+}
+
+void ARX::ustawOpoznienie(int newK)
+{
+    k = newK;
+}
+
+void ARX::przelaczLimity(bool stan)
+{
+    stanLimitow = stan;
+}
+
+void ARX::przelaczSzum(bool stan)
+{
+    stanSzumu = stan;
+}
+
+void ARX::ustawLimitWejscia(double newUMIN, double newUMAX)
+{
+    uMin = newUMIN;
+    uMax = newUMAX;
+}
+
+void ARX::ustawLimitWyjscia(double newYMIN, double newYMAX)
+{
+    yMin = newYMIN;
+    yMax = newYMAX;
 }
