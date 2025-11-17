@@ -1,6 +1,6 @@
 #include "ARX.h"
 #include "PID.h"
-#include "GenWart.h"
+#include "GWZ.h"
 #include <iostream>
 #include <vector>
 #include <queue>

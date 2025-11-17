@@ -1,4 +1,4 @@
-#include "GenWart.h"
+#include "GWZ.h"
 #include <cmath>
 #include <algorithm>
 
