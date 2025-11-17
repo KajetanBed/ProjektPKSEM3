@@ -1,4 +1,6 @@
 #include "ARX.h"
+#include "PID.h"
+#include "GenWart.h"
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -8,13 +10,13 @@ using namespace std;
 
 int main()
 {
-    vector<double> v1 = {-0.4}; // a
-    vector<double> v2 = {0.6};  // b
+    GeneratorWartosciZadanej g1(2.0, 1.0, 0.0, 0.5, 200, TypSygnalu::Sinusoida);
 
-    ARX a1(v1, v2, 1);
-    vector<double> u = {0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
-    for (int i = 0; i < 7; i++)
+    std::cout << "Sinusoida (10 próbek):\n";
+    for (int k = 0; k < 10; ++k)
     {
-        cout << setprecision(3) << fixed << a1.symuluj(u[i]) << endl;
+        double w = g1.obliczSygnal();
+        std::cout << "i=" << std::setw(2) << k
+                  << "   w = " << std::fixed << std::setprecision(3) << w << "\n";
     }
 }
