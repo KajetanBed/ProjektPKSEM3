@@ -96,7 +96,7 @@ void WarstwaU::resetPid(PID &pid)
     pid.resetujSumeUchybu();
 }
 
-// ------------------- UAR -------------------
+// ------------------- UAR ----------------------------------------
 
 double WarstwaU::simulateUAR(UAR &uar, double zadanie)
 {
