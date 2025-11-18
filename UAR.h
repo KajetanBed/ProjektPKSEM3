@@ -6,13 +6,11 @@
 class UAR
 {
 private:
-    ARX model;   // kompozycja — własny model
-    PID pid;     // kompozycja — własny regulator PID
+    ARX model;
+    PID pid;   
     double y_prev;
 
 public:
-    // konstruktor musi skopiować parametry PID i ARX,
-    // ale NIE polegać na kopiowaniu obiektu ARX (ma usunięty copy ctor)
     UAR(const ARX& m, const PID& r)
         : model(m),  
         pid(r),
