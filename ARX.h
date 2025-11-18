@@ -20,7 +20,6 @@ private:
 
     double amplitudaSzumu;
     bool stanSzumu;
-    random_device gen;
     mt19937 generator;
     normal_distribution<double> distribution;
 
@@ -29,7 +28,8 @@ private:
     double zastosujLimity(double, double, double);
 
 public:
-    ARX(vector<double>, vector<double>, int);
+    ARX(std::vector<double> _a, std::vector<double> _b, int _k = 1);
+
     double symuluj(double);
 
     void ustawParametry(vector<double>, vector<double>, int);
