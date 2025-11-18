@@ -42,6 +42,7 @@ void PID::setTryb(trybCalki nowyTryb)
 void PID::resetujSumeUchybu()
 {
     sumaUchybu = 0.0;
+    poprzedniUchyb = 0.0;
 }
 
 double PID::oblicz(double uchyb)

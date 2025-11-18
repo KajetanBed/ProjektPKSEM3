@@ -3,10 +3,11 @@
 #include <numeric>
 #include <cassert>
 
-ARX::ARX(vector<double> _a, vector<double> _b, int _k) : a(_a), b(_b), k(_k), generator(std::random_device{}()), distribution{ 0.0, 0.01 },
-stanSzumu(false), stanLimitow(true), uMin(-10.0), uMax(10.0), yMin(-10.0), yMax(10.0)
+ARX::ARX(vector<double> _a, vector<double> _b, int _k) : a(_a), b(_b), k(_k), generator(std::random_device{}()), distribution{0.0, 0.01},
+                                                         stanSzumu(false), stanLimitow(true), uMin(-10.0), uMax(10.0), yMin(-10.0), yMax(10.0)
 {
-
+    assert(a.size() >= 3 && "Wektor a musi miec co najmniej 3 elementy");
+    assert(b.size() >= 3 && "Wektor b musi miec co najmniej 3 elementy");
     yHist.assign(a.size(), 0.0);
 
     uHist.assign(b.size(), 0.0);
