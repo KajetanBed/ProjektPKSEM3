@@ -6,94 +6,94 @@ WarstwaU::WarstwaU() = default;
 
 // ------------------- ARX -------------------
 
-void WarstwaU::setArxA(ARX &arx, const std::vector<double> &a)
+void WarstwaU::setArxA(UAR &uar, const std::vector<double> &a)
 {
-    arx.ustawA(a);
+    uar.getARX().ustawA(a);
 }
 
-void WarstwaU::setArxB(ARX &arx, const std::vector<double> &b)
+void WarstwaU::setArxB(UAR &uar, const std::vector<double> &b)
 {
-    arx.ustawB(b);
+    uar.getARX().ustawB(b);
 }
 
-void WarstwaU::setArxDelay(ARX &arx, int k)
+void WarstwaU::setArxDelay(UAR &uar, int k)
 {
-    arx.ustawOpoznienie(k);
+    uar.getARX().ustawOpoznienie(k);
 }
 
-void WarstwaU::setArxLimits(ARX &arx, double uMin, double uMax, double yMin, double yMax)
+void WarstwaU::setArxLimits(UAR &uar, double uMin, double uMax, double yMin, double yMax)
 {
-    arx.ustawLimitWejscia(uMin, uMax);
-    arx.ustawLimitWyjscia(yMin, yMax);
+    uar.getARX().ustawLimitWejscia(uMin, uMax);
+    uar.getARX().ustawLimitWyjscia(yMin, yMax);
 }
 
-void WarstwaU::toggleArxLimits(ARX &arx, bool stan)
+void WarstwaU::toggleArxLimits(UAR &uar, bool stan)
 {
-    arx.przelaczLimity(stan);
+    uar.getARX().przelaczLimity(stan);
 }
 
-void WarstwaU::toggleArxNoise(ARX &arx, bool stan)
+void WarstwaU::toggleArxNoise(UAR &uar, bool stan)
 {
-    arx.przelaczSzum(stan);
+    uar.getARX().przelaczSzum(stan);
 }
 
 // ------------------- GWZ ----------------------
 
-void WarstwaU::setGwzAmplitude(GeneratorWartosciZadanej &gwz, double A)
+void WarstwaU::setGwzAmplitude(UAR &uar, double A)
 {
-    gwz.setAmplituda(A);
+    uar.getGWZ().setAmplituda(A);
 }
 
-void WarstwaU::setGwzPeriod(GeneratorWartosciZadanej &gwz, double T)
+void WarstwaU::setGwzPeriod(UAR &uar, double T)
 {
-    gwz.setOkres(T);
+    uar.getGWZ().setOkres(T);
 }
 
-void WarstwaU::setGwzStala(GeneratorWartosciZadanej &gwz, double S)
+void WarstwaU::setGwzStala(UAR &uar, double S)
 {
-    gwz.setStala(S);
+    uar.getGWZ().setStala(S);
 }
 
-void WarstwaU::setGwzWypelnienie(GeneratorWartosciZadanej &gwz, double p)
+void WarstwaU::setGwzWypelnienie(UAR &uar, double p)
 {
-    gwz.setWypelnienie(p);
+    uar.getGWZ().setWypelnienie(p);
 }
 
-void WarstwaU::setGwzType(GeneratorWartosciZadanej &gwz, TypSygnalu typ)
+void WarstwaU::setGwzType(UAR &uar, TypSygnalu typ)
 {
-    gwz.setTyp(typ);
+    uar.getGWZ().setTyp(typ);
 }
 
-double WarstwaU::generateGwz(GeneratorWartosciZadanej &gwz)
+double WarstwaU::generateGwz(UAR &uar)
 {
-    return gwz.obliczSygnal();
+    return uar.getGWZ().obliczSygnal();
 }
 
 // ------------------- PID -------------------
 
-void WarstwaU::setPidK(PID &pid, double k)
+void WarstwaU::setPidK(UAR &uar, double k)
 {
-    pid.setK(k);
+    uar.getPID().setK(k);
 }
 
-void WarstwaU::setPidTI(PID &pid, double TI)
+void WarstwaU::setPidTI(UAR &uar, double TI)
 {
-    pid.setTI(TI);
+    uar.getPID().setTI(TI);
 }
 
-void WarstwaU::setPidTD(PID &pid, double TD)
+void WarstwaU::setPidTD(UAR &uar, double TD)
 {
-    pid.setTD(TD);
+    uar.getPID().setTD(TD);
 }
 
-void WarstwaU::setPidMode(PID &pid, PID::trybCalki tryb)
+void WarstwaU::setPidMode(UAR &uar, PID::trybCalki tryb)
 {
-    pid.setTryb(tryb);
+    uar.getPID().setTryb(tryb);
 }
 
-void WarstwaU::resetPid(PID &pid)
+void WarstwaU::resetPid(UAR &uar)
 {
-    pid.resetujSumeUchybu();
+    uar.getPID().resetujSumeUchybu();
 }
 
 // ------------------- UAR ----------------------------------------
