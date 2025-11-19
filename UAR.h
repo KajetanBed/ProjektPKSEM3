@@ -32,6 +32,10 @@ public:
         model.przelaczSzum(false);
     }
 
+    ARX& getARX() { return model; }
+    PID& getPID() { return pid; }
+    GeneratorWartosciZadanej& getGWZ() { return GWZ; }
+
     double symuluj(double zadanie);
     double symuluj();
 };
