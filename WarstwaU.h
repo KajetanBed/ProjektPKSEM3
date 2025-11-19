@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include "ARX.h"
 #include "GWZ.h"
 #include "PID.h"
@@ -9,27 +10,28 @@ class WarstwaU
 public:
     WarstwaU();
 
-    // --- ARX ----
-    void setArxA(ARX &arx, const std::vector<double> &a);
-    void setArxB(ARX &arx, const std::vector<double> &b);
-    void setArxDelay(ARX &arx, int k);
-    void setArxLimits(ARX &arx, double uMin, double uMax, double yMin, double yMax);
-    void toggleArxLimits(ARX &arx, bool stan);
-    void toggleArxNoise(ARX &arx, bool stan);
+    // --- ARX ---
+    void setArxA(UAR &uar, const std::vector<double> &a);
+    void setArxB(UAR &uar, const std::vector<double> &b);
+    void setArxDelay(UAR &uar, int k);
+    void setArxLimits(UAR &uar, double uMin, double uMax, double yMin, double yMax);
+    void toggleArxLimits(UAR &uar, bool stan);
+    void toggleArxNoise(UAR &uar, bool stan);
+
     // --- GWZ ---
-    void setGwzAmplitude(GeneratorWartosciZadanej &gwz, double A);
-    void setGwzPeriod(GeneratorWartosciZadanej &gwz, double T);
-    void setGwzStala(GeneratorWartosciZadanej &gwz, double S);
-    void setGwzWypelnienie(GeneratorWartosciZadanej &gwz, double p);
-    void setGwzType(GeneratorWartosciZadanej &gwz, TypSygnalu typ);
-    double generateGwz(GeneratorWartosciZadanej &gwz);
+    void setGwzAmplitude(UAR &uar, double A);
+    void setGwzPeriod(UAR &uar, double T);
+    void setGwzStala(UAR &uar, double S);
+    void setGwzWypelnienie(UAR &uar, double p);
+    void setGwzType(UAR &uar, TypSygnalu typ);
+    double generateGwz(UAR &uar);
 
     // --- PID ---
-    void setPidK(PID &pid, double k);
-    void setPidTI(PID &pid, double TI);
-    void setPidTD(PID &pid, double TD);
-    void setPidMode(PID &pid, PID::trybCalki tryb);
-    void resetPid(PID &pid);
+    void setPidK(UAR &uar, double k);
+    void setPidTI(UAR &uar, double TI);
+    void setPidTD(UAR &uar, double TD);
+    void setPidMode(UAR &uar, PID::trybCalki tryb);
+    void resetPid(UAR &uar);
 
     // --- UAR ---
     double simulateUAR(UAR &uar, double zadanie);
