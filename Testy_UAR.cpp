@@ -145,7 +145,7 @@ void TESTY_ModelARX::test_skokJednostkowy_2()
 			sygWe[i] = !!i;
 		spodzSygWy = {0, 0, 0, 0.6, 0.84, 0.936, 0.9744, 0.98976, 0.995904, 0.998362, 0.999345, 0.999738, 0.999895, 0.999958, 0.999983, 0.999993, 0.999997, 0.999999, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 
-		// Symulacja modelu:
+		// Symulacja Modelu:
 		for (int i = 0; i < LICZ_ITER; i++)
 			faktSygWy[i] = instancjaTestowa.symuluj(sygWe[i]);
 

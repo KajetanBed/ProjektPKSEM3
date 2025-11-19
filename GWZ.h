@@ -26,6 +26,7 @@ private:
     int i; // Licznik probek
 
 public:
+    GeneratorWartosciZadanej() = default;
     GeneratorWartosciZadanej(double, double, double, double, int, TypSygnalu);
 
     // SETTERY

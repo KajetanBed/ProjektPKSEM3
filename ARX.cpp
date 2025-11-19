@@ -27,10 +27,10 @@ double ARX::symuluj(double u)
     uHist.push_front(uDelayed);
     uHist.pop_back();
 
-    // obliczenie czesci przy b
+    // obliczenie czesci przy B
     double y = std::inner_product(b.begin(), b.end(), uHist.begin(), 0.0);
 
-    // obliczenie czesci przy a
+    // obliczenie czesci przy A
     y -= std::inner_product(a.begin(), a.end(), yHist.begin(), 0.0);
 
     if (stanSzumu)

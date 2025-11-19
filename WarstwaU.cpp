@@ -37,7 +37,7 @@ void WarstwaU::toggleArxNoise(ARX &arx, bool stan)
     arx.przelaczSzum(stan);
 }
 
-// ------------------- GWZ -------------------
+// ------------------- GWZ ----------------------
 
 void WarstwaU::setGwzAmplitude(GeneratorWartosciZadanej &gwz, double A)
 {

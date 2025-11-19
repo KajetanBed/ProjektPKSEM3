@@ -119,7 +119,7 @@ void test_GWZ_dynamiczna_czestotliwosc()
 /* =======================================================
    GWZ - TEST 2
    Sygnal prostokatny z nietypowym wypelnieniem 73%
-   ======================================================= */
+   ======================================================== */
 void test_GWZ_prostokat_73proc()
 {
     GeneratorWartosciZadanej gwz(2.0, 1.0, 0.0, 0.73, 10, TypSygnalu::SygnalProstokatny);

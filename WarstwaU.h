@@ -9,7 +9,7 @@ class WarstwaU
 public:
     WarstwaU();
 
-    // --- ARX ---
+    // --- ARX ----
     void setArxA(ARX &arx, const std::vector<double> &a);
     void setArxB(ARX &arx, const std::vector<double> &b);
     void setArxDelay(ARX &arx, int k);

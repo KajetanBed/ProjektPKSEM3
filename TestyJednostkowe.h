@@ -1,6 +1,6 @@
 #pragma once
-
-bool wynik_testu(const std::string& nazwa, const std::vector<double>& oczek, const std::vector<double>& wynik);
+//
+bool wynik_testu(const std::string &nazwa, const std::vector<double> &oczek, const std::vector<double> &wynik);
 void test_ARX_sin_z_opoznieniem();
 void test_ARX_zmiana_parametrow_w_locie();
 void test_GWZ_dynamiczna_czestotliwosc();

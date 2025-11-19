@@ -37,7 +37,7 @@ TypSygnalu GeneratorWartosciZadanej::getTyp() const { return GeneratorWartosciZa
 double GeneratorWartosciZadanej::obliczSygnal()
 {
     if (T <= 0)
-        return S; // zabezpieczenie
+        return S; // Zabezpieczenie
 
     int modT = i % (int)T;
     double Wi = 0.0;

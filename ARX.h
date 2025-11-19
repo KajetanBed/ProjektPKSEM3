@@ -3,7 +3,7 @@
 #include <deque>
 #include <random>
 using namespace std;
-
+//
 class ARX
 {
 private:

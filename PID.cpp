@@ -1,6 +1,6 @@
 #include "PID.h"
 #include <cmath>
-
+//
 PID::PID(double _k, double _TI, double _TD) : k(_k), TI(_TI), TD(_TD), typCalkowania(trybCalki::wew), sumaUchybu(0.0), poprzedniUchyb(0.0)
 {
 }
