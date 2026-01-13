@@ -115,7 +115,7 @@ void MainWindow::aktualizujSymulacje()
 
     // Generator
     symulatorUAR->getGWZ().setAmplituda(ui->spinAmp->value());
-    symulatorUAR->getGWZ().setOkres(ui->spinOkres->value()); // To jest T_rzeczywiste
+    symulatorUAR->getGWZ().setTRZ(ui->spinOkres->value()); // To jest T_rzeczywiste
     symulatorUAR->getGWZ().setWypelnienie(ui->spinWypelnienie->value());
 
     // Typ sygnału (0 - Prostokąt, 1 - Sinusoida - zależy jak dodałeś w ComboBox)
@@ -131,7 +131,8 @@ void MainWindow::aktualizujSymulacje()
     // --- 2. Obliczenia Symulacji (To co było) ---
     double w = symulatorUAR->getGWZ().obliczSygnal();
     double e = w - y_prev;
-    double u = symulatorUAR->getPID().oblicz(e);
+    double dt = timerSymulacji->interval() / 1000.0; // ms na sekundy
+    double u = symulatorUAR->getPID().oblicz(e,dt);
 
     double valP = symulatorUAR->getPID().getP();
     double valI = symulatorUAR->getPID().getI();

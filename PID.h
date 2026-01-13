@@ -32,7 +32,7 @@ public:
 
     void resetujSumeUchybu();
 
-    double oblicz(double);
+    double oblicz(double, double);
 
     // --- NOWE GETTERY ---
     double getP() const { return lastP; }

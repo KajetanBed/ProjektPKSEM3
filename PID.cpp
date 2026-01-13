@@ -33,7 +33,7 @@ void PID::resetujSumeUchybu()
     lastI = 0.0; // Reset też tutaj
 }
 
-double PID::oblicz(double uchyb)
+double PID::oblicz(double uchyb, double dt)
 {
     // Obliczenie P
     double uP = k * uchyb;
@@ -44,18 +44,18 @@ double PID::oblicz(double uchyb)
     {
         if (typCalkowania == trybCalki::zew)
         {
-            sumaUchybu += uchyb;
+            sumaUchybu += uchyb * dt;
             uI = (1.0 / TI) * sumaUchybu;
         }
         else
         {
-            sumaUchybu += uchyb / TI;
+            sumaUchybu += (uchyb * dt) / TI;
             uI = sumaUchybu;
         }
     }
 
     // Obliczenie D
-    double uD = TD * (uchyb - poprzedniUchyb);
+    double uD = TD * (uchyb - poprzedniUchyb) / dt;
     poprzedniUchyb = uchyb;
 
     // ZAPIS DO ZMIENNYCH (aby można było je pobrać do wykresu)
