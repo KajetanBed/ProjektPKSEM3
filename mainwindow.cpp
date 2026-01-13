@@ -28,9 +28,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     symulatorUAR = new UAR(model, regulator, gen);
 
+    symulatorUAR->getARX().ustawLimitWejscia(-10.0, 10.0); // Wymuś zakres sterowania
+    symulatorUAR->getARX().ustawLimitWyjscia(-10.0, 10.0); // Wymuś zakres wyjścia
+    symulatorUAR->getARX().przelaczLimity(true);           // Wymuś włączenie
+
     timerSymulacji = new QTimer(this);
     connect(timerSymulacji, &QTimer::timeout, this, &MainWindow::aktualizujSymulacje);
-
     aktualnyCzas = 0.0;
     y_prev = 0.0;
 
@@ -79,6 +82,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->btnStart, &QPushButton::clicked, this, &MainWindow::on_btnStart_clicked);
     connect(ui->btnStop, &QPushButton::clicked, this, &MainWindow::on_btnStop_clicked);
     connect(ui->btnReset, &QPushButton::clicked, this, &MainWindow::on_btnReset_clicked);
+
 }
 
 MainWindow::~MainWindow()
@@ -117,6 +121,7 @@ void MainWindow::aktualizujSymulacje()
     symulatorUAR->getGWZ().setAmplituda(ui->spinAmp->value());
     symulatorUAR->getGWZ().setTRZ(ui->spinOkres->value()); // To jest T_rzeczywiste
     symulatorUAR->getGWZ().setWypelnienie(ui->spinWypelnienie->value());
+    symulatorUAR->getGWZ().setStala(ui->spinStala->value());
 
     // Typ sygnału (0 - Prostokąt, 1 - Sinusoida - zależy jak dodałeś w ComboBox)
     if(ui->comboTyp->currentIndex() == 0)
@@ -242,7 +247,12 @@ void MainWindow::on_btnUstawieniaARX_clicked()
         symulatorUAR->getARX().ustawOpoznienie(okno.getK());
         symulatorUAR->getARX().przelaczSzum(okno.getSzum() > 0.0);
         // symulatorUAR->getARX().ustawOdchylenie(okno.getSzum()); // jeśli masz taką metodę
-
+        double uMin = okno.getUmin();
+        double uMax = okno.getUmax();
+        if (!okno.getLimityAktywne()) {
+                    uMin = -999999.0;
+                    uMax = 999999.0;
+        }
         // Limity
         symulatorUAR->getARX().ustawLimitWejscia(okno.getUmin(), okno.getUmax());
         symulatorUAR->getARX().przelaczLimity(okno.getLimityAktywne());
@@ -269,6 +279,7 @@ void MainWindow::on_btnZapisz_clicked()
     jsonGEN["Amplituda"] = ui->spinAmp->value();
     jsonGEN["Okres"] = ui->spinOkres->value();
     jsonGEN["Wypelnienie"] = ui->spinWypelnienie->value();
+    jsonGEN["Stala"] = ui->spinStala->value();
     jsonGEN["Typ"] = ui->comboTyp->currentIndex();
     root["Generator"] = jsonGEN;
 
@@ -351,6 +362,9 @@ void MainWindow::on_btnWczytaj_clicked()
         ui->spinAmp->setValue(jsonGEN["Amplituda"].toDouble());
         ui->spinOkres->setValue(jsonGEN["Okres"].toDouble());
         ui->spinWypelnienie->setValue(jsonGEN["Wypelnienie"].toDouble());
+        if(jsonGEN.contains("Stala")) {
+                     ui->spinStala->setValue(jsonGEN["Stala"].toDouble());
+                }
         ui->comboTyp->setCurrentIndex(jsonGEN["Typ"].toInt());
     }
 
