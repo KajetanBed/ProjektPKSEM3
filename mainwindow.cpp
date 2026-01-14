@@ -129,6 +129,11 @@ void MainWindow::aktualizujSymulacje()
 
     // Aktualizacja interwału generatora
     warstwaUslug->setGwzTT(symulatorUAR, timerSymulacji->interval());
+    int nowyInterwal = ui->spinInterwal->value();
+    if (nowyInterwal >= 10 && timerSymulacji->interval() != nowyInterwal)
+    {
+        timerSymulacji->setInterval(nowyInterwal);
+    }
 
     // Obliczenia Symulacji
     double w = warstwaUslug->generateGwz(symulatorUAR);
