@@ -38,13 +38,13 @@ QString UstawieniaARX::wektorNaTekst(const std::vector<double> &vec)
     return lista.join(", ");
 }
 
-// --- SETTERY (Wypełnianie okna) ---
+//SETTERY
 void UstawieniaARX::setWielomianA(const std::vector<double> &a) { ui->leA->setText(wektorNaTekst(a)); }
 void UstawieniaARX::setWielomianB(const std::vector<double> &b) { ui->leB->setText(wektorNaTekst(b)); }
 void UstawieniaARX::setK(int k) { ui->spinK->setValue(k); }
 void UstawieniaARX::setSzum(double s) { ui->spinSzum->setValue(s); }
 
-// --- GETTERY (Pobieranie wyników) ---
+//GETTERY
 std::vector<double> UstawieniaARX::getA() const { return parsujWektor(ui->leA->text()); }
 std::vector<double> UstawieniaARX::getB() const { return parsujWektor(ui->leB->text()); }
 int UstawieniaARX::getK() const { return ui->spinK->value(); }
@@ -55,10 +55,10 @@ double UstawieniaARX::getUmax() const { return ui->spinUmax->value(); }
 double UstawieniaARX::getYmin() const { return ui->spinYmin->value(); }
 double UstawieniaARX::getYmax() const { return ui->spinYmax->value(); }
 
-// --- AKCJE PRZYCISKÓW ---
+//AKCJE PRZYCISKÓW
 void UstawieniaARX::on_btnZatwierdz_clicked()
 {
-    // Walidacja zgodnie z instrukcją (min 3 elementy) [cite: 30]
+    
     std::vector<double> a = getA();
     std::vector<double> b = getB();
 
