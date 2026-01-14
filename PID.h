@@ -16,7 +16,7 @@ private:
     trybCalki typCalkowania;
     double sumaUchybu;
     double poprzedniUchyb;
-
+    double lastFilteredD = 0.0;
     // --- NOWE ZMIENNE DO WYKRESÓW ---
     double lastP;
     double lastI;

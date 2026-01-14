@@ -5,6 +5,7 @@
 #include <QTimer>
 #include "qcustomplot.h"
 #include "UAR.h"
+#include "WarstwaU.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -37,6 +38,7 @@ private:
 
 
     UAR *symulatorUAR;
+    WarstwaU *warstwaUslug;
     QTimer *timerSymulacji;
 
     double aktualnyCzas;

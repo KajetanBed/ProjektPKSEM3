@@ -23,7 +23,7 @@ private:
     double TRZ;
     int TT;
 
-    int i; // Licznik probek
+    int i = 0; // Licznik probek
 
 public:
     GeneratorWartosciZadanej() = default;

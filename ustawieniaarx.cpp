@@ -2,9 +2,8 @@
 #include "ui_ustawieniaarx.h"
 #include <QMessageBox>
 
-UstawieniaARX::UstawieniaARX(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::UstawieniaARX)
+UstawieniaARX::UstawieniaARX(QWidget *parent) : QDialog(parent),
+                                                ui(new Ui::UstawieniaARX)
 {
     ui->setupUi(this);
 }
@@ -19,10 +18,12 @@ std::vector<double> UstawieniaARX::parsujWektor(QString tekst) const
     std::vector<double> wynik;
     QStringList lista = tekst.split(',');
 
-    for(const QString &str : lista) {
+    for (const QString &str : lista)
+    {
         bool ok;
         double val = str.trimmed().toDouble(&ok);
-        if(ok) {
+        if (ok)
+        {
             wynik.push_back(val);
         }
     }
@@ -32,7 +33,8 @@ std::vector<double> UstawieniaARX::parsujWektor(QString tekst) const
 QString UstawieniaARX::wektorNaTekst(const std::vector<double> &vec)
 {
     QStringList lista;
-    for(double v : vec) lista << QString::number(v);
+    for (double v : vec)
+        lista << QString::number(v);
     return lista.join(", ");
 }
 
@@ -50,7 +52,8 @@ double UstawieniaARX::getSzum() const { return ui->spinSzum->value(); }
 bool UstawieniaARX::getLimityAktywne() const { return ui->checkLimity->isChecked(); }
 double UstawieniaARX::getUmin() const { return ui->spinUmin->value(); }
 double UstawieniaARX::getUmax() const { return ui->spinUmax->value(); }
-
+double UstawieniaARX::getYmin() const { return ui->spinYmin->value(); }
+double UstawieniaARX::getYmax() const { return ui->spinYmax->value(); }
 
 // --- AKCJE PRZYCISKÓW ---
 void UstawieniaARX::on_btnZatwierdz_clicked()
@@ -59,7 +62,8 @@ void UstawieniaARX::on_btnZatwierdz_clicked()
     std::vector<double> a = getA();
     std::vector<double> b = getB();
 
-    if(a.size() < 3 || b.size() < 3) {
+    if (a.size() < 3 || b.size() < 3)
+    {
         QMessageBox::warning(this, "Błąd", "Wielomiany muszą mieć min. 3 współczynniki!");
         return;
     }

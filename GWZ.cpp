@@ -55,7 +55,7 @@ double GeneratorWartosciZadanej::obliczSygnal()
         if (modT < p * T)
             Wi = A + S;
         else
-            Wi = S;
+            Wi =  - A + S;
     }
 
     i++; // przechodzimy do nastepnej probki

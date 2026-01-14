@@ -4,8 +4,9 @@
 #include <QDialog>
 #include <vector>
 
-namespace Ui {
-class UstawieniaARX;
+namespace Ui
+{
+    class UstawieniaARX;
 }
 
 class UstawieniaARX : public QDialog
@@ -33,6 +34,8 @@ public:
     bool getLimityAktywne() const;
     double getUmin() const;
     double getUmax() const;
+    double getYmin() const;
+    double getYmax() const;
 
 private slots:
     void on_btnZatwierdz_clicked();

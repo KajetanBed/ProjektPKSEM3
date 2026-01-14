@@ -14,7 +14,8 @@ void PID::setTD(double newTD) { TD = newTD; }
 
 void PID::setTryb(trybCalki nowyTryb)
 {
-    if (typCalkowania == nowyTryb) return;
+    if (typCalkowania == nowyTryb)
+        return;
 
     if (TI != 0.0)
     {
@@ -40,22 +41,25 @@ double PID::oblicz(double uchyb, double dt)
 
     // Obliczenie I
     double uI = 0.0;
+    double Itemp = 0.0;
     if (TI != 0.0)
     {
         if (typCalkowania == trybCalki::zew)
         {
             sumaUchybu += uchyb * dt;
-            uI = (1.0 / TI) * sumaUchybu;
+            Itemp = sumaUchybu / TI;
         }
         else
         {
-            sumaUchybu += (uchyb * dt) / TI;
-            uI = sumaUchybu;
+            sumaUchybu += (uchyb / TI) * dt;
+            Itemp = sumaUchybu;
         }
     }
 
+    uI = k * Itemp;
+
     // Obliczenie D
-    double uD = TD * (uchyb - poprzedniUchyb) / dt;
+    double uD = k * TD * ((uchyb - poprzedniUchyb) / dt);
     poprzedniUchyb = uchyb;
 
     // ZAPIS DO ZMIENNYCH (aby można było je pobrać do wykresu)
