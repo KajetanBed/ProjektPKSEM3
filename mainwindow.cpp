@@ -174,10 +174,53 @@ void MainWindow::aktualizujSymulacje()
     ui->chartWykres4->graph(1)->data()->removeBefore(minX);
     ui->chartWykres4->graph(2)->data()->removeBefore(minX);
 
-    ui->chartWykres1->yAxis->rescale();
-    ui->chartWykres2->yAxis->rescale();
-    ui->chartwykres3->yAxis->rescale();
-    ui->chartWykres4->yAxis->rescale();
+    auto bezpiecznyRescale = [](QCustomPlot *p, double minSpan = 10.0)
+    {
+        if (!p)
+            return;
+
+        // POBIERAMY dane bezpośrednio, zamiast ufać rescale()
+        bool found = false;
+        QCPRange range = p->graph(0)->getValueRange(found);
+
+        // Jeśli wykres ma więcej linii (np. zadana i wyjście), uwzględnij obie
+        for (int i = 1; i < p->graphCount(); ++i)
+        {
+            bool f;
+            QCPRange r = p->graph(i)->getValueRange(f);
+            if (f)
+                range.expand(r);
+        }
+
+        if (!found || range.size() < 0.001)
+        {
+            // Jeśli brak danych lub sygnał płaski - trzymaj sztywne +/- 5
+            p->yAxis->setRange(-minSpan / 2.0, minSpan / 2.0);
+        }
+        else
+        {
+            // Jeśli sygnał żyje - dodaj margines 15% góra/dół RAZ
+            double margin = range.size() * 0.15;
+            p->yAxis->setRange(range.lower - margin, range.upper + margin);
+        }
+
+        // Ostateczna blokada przed błędem numerycznym na osi
+        if (!std::isfinite(p->yAxis->range().lower))
+            p->yAxis->setRange(-5, 5);
+
+        p->replot();
+    };
+
+    bezpiecznyRescale(ui->chartWykres1);
+    bezpiecznyRescale(ui->chartWykres2);
+    bezpiecznyRescale(ui->chartwykres3);
+    if (ui->chartWykres4)
+        bezpiecznyRescale(ui->chartWykres4);
+
+    // ui->chartWykres1->yAxis->rescale();
+    // ui->chartWykres2->yAxis->rescale();
+    // ui->chartwykres3->yAxis->rescale();
+    // ui->chartWykres4->yAxis->rescale();
 
     ui->chartWykres1->replot();
     ui->chartWykres2->replot();
