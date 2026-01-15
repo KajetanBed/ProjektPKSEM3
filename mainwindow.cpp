@@ -181,11 +181,6 @@ void MainWindow::aktualizujSymulacje()
 
     
 
-    bezpiecznyRescale(ui->chartWykres1);
-    bezpiecznyRescale(ui->chartWykres2);
-    bezpiecznyRescale(ui->chartwykres3);
-    if (ui->chartWykres4)
-        bezpiecznyRescale(ui->chartWykres4);
 
      ui->chartWykres1->yAxis->rescale();
      ui->chartWykres2->yAxis->rescale();
