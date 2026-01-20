@@ -7,45 +7,58 @@
 
 class WarstwaU
 {
+private:
+    UAR *symulator; // WarstwaU jest teraz właścicielem obiektu UAR
+
 public:
-    WarstwaU() = default;
+    WarstwaU();
+    ~WarstwaU(); // Destruktor do posprzątania po UAR
 
     // --- ARX ---
-    void setArxA(UAR *uar, const std::vector<double> &a);
-    void setArxB(UAR *uar, const std::vector<double> &b);
-    void setArxK(UAR *uar, int k);
-    void setArxDelay(UAR *uar, int k);
-    void setArxLimits(UAR *uar, double uMin, double uMax, double yMin, double yMax);
-    void setArxInputLimit(UAR *uar, double Min, double Max);
-    void setArxOutputLimit(UAR *uar, double Min, double Max);
-    void toggleArxLimits(UAR *uar, bool stan);
-    void toggleArxNoise(UAR *uar, bool stan);
-    double calculateARX(UAR *uar, double u);
-    std::vector<double> getArxA(UAR *uar);
-    std::vector<double> getArxB(UAR *uar);
-    int getArxK(UAR *uar);
+    // Usunięto argument 'UAR* uar' ze wszystkich metod
+    void setArxA(const std::vector<double> &a);
+    void setArxB(const std::vector<double> &b);
+    void setArxK(int k);
+    void setArxDelay(int k);
+    void setArxLimits(double uMin, double uMax, double yMin, double yMax);
+    void setArxInputLimit(double Min, double Max);
+    void setArxOutputLimit(double Min, double Max);
+    void toggleArxLimits(bool stan);
+    void toggleArxNoise(bool stan);
+    double calculateARX(double u);
+    std::vector<double> getArxA();
+    std::vector<double> getArxB();
+    int getArxK();
+    double getArxNoise();
+    double getArxUMin();
+    double getArxUMax();
+    double getArxYMin();
+    double getArxYMax();
+    bool getArxLimitsActive();
+    bool getArxNoiseActive();
 
     // --- GWZ ---
-    void setGwzAmplitude(UAR *uar, double A);
-    void setGwzPeriod(UAR *uar, double T);
-    void setGwzStala(UAR *uar, double S);
-    void setGwzWypelnienie(UAR *uar, double p);
-    void setGwzType(UAR *uar, TypSygnalu typ);
-    void setGwzTT(UAR *uar, double tt);
-    double generateGwz(UAR *uar);
-    void resetGwz(UAR *uar);
+    void setGwzAmplitude(double A);
+    void setGwzPeriod(double T);
+    void setGwzStala(double S);
+    void setGwzWypelnienie(double p);
+    void setGwzType(TypSygnalu typ);
+    void setGwzTT(double tt);
+    double generateGwz();
+    void resetGwz();
 
     // --- PID ---
-    void setPidK(UAR *uar, double k);
-    void setPidTI(UAR *uar, double TI);
-    void setPidTD(UAR *uar, double TD);
-    double PIDgetP(UAR *uar);
-    double PIDgetI(UAR *uar);
-    double PIDgetD(UAR *uar);
-    void setPidMode(UAR *uar, PID::trybCalki tryb);
-    void resetPid(UAR *uar);
-    double calculatePID(UAR *uar, double uchyb, double dt);
+    void setPidK(double k);
+    void setPidTI(double TI);
+    void setPidTD(double TD);
+    double PIDgetP();
+    double PIDgetI();
+    double PIDgetD();
+    void setPidMode(PID::trybCalki tryb);
+    void resetPid();
+    double calculatePID(double uchyb, double dt);
+    PID::trybCalki getPidMode();
 
     // --- UAR ---
-    double simulateUAR(UAR *uar, double zadanie);
+    double simulateUAR(double zadanie);
 };

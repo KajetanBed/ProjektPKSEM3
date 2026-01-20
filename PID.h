@@ -38,4 +38,6 @@ public:
     double getP() const { return lastP; }
     double getI() const { return lastI; }
     double getD() const { return lastD; }
+    // --- NOWE GETTERY DO ZAPISU ---
+    trybCalki getTryb() const { return typCalkowania; }
 };

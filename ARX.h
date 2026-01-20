@@ -47,4 +47,10 @@ public:
     std::vector<double> getB() const { return b; }
     int getK() const { return k; }
     double getSzum() const { return distribution.stddev(); }
+    double getUMin() const { return uMin; }
+    double getUMax() const { return uMax; }
+    double getYMin() const { return yMin; }
+    double getYMax() const { return yMax; }
+    bool getLimityAktywne() const { return stanLimitow; }
+    bool getSzumAktywny() const { return stanSzumu; }
 };
