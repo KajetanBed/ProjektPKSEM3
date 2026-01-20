@@ -9,6 +9,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QFile>
+#include <qdebug>
 
 using namespace std;
 
@@ -38,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->chartWykres1->graph(1)->setName("Wyjście");
     ui->chartWykres1->legend->setVisible(true);
 
+
     setupPlot(ui->chartWykres2, "Uchyb", "e");
     ui->chartWykres2->addGraph();
     ui->chartWykres2->graph(0)->setPen(QPen(Qt::black));
@@ -58,6 +60,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->btnStart, &QPushButton::clicked, this, &MainWindow::on_btnStart_clicked);
     connect(ui->btnStop, &QPushButton::clicked, this, &MainWindow::on_btnStop_clicked);
     connect(ui->btnReset, &QPushButton::clicked, this, &MainWindow::on_btnReset_clicked);
+
 }
 
 MainWindow::~MainWindow()
@@ -398,74 +401,48 @@ void MainWindow::on_btnWczytaj_clicked()
 void MainWindow::skalujWykres(QCustomPlot *p, double minSpan)
 {
     if (!p) return;
-    if (p->graphCount() == 0) return; // Zabezpieczenie przed pustym wykresem
-
+    if (p->graphCount() == 0) return;
     bool found = false;
-    // Pobieramy zakres pierwszego wykresu
     QCPRange range = p->graph(0)->getValueRange(found);
-
-    // Jeśli na jednym wykresie (QCustomPlot) jest więcej linii (np. zadana i wyjście),
-    // musimy uwzględnić zakresy ich wszystkich.
     for (int i = 1; i < p->graphCount(); ++i)
     {
         bool f;
         QCPRange r = p->graph(i)->getValueRange(f);
         if (f)
-            range.expand(r); // Rozszerzamy zakres o kolejne linie
+            range.expand(r);
     }
 
     if (!found || range.size() < 0.001)
     {
-        // Jeśli sygnał jest płaski (stała wartość) lub brak danych -> sztywne ramy
-        // Centrujemy wokół wartości (jeśli jest), lub wokół 0
         double center = (found) ? range.center() : 0.0;
         p->yAxis->setRange(center - minSpan / 2.0, center + minSpan / 2.0);
     }
     else
     {
-        // Jeśli sygnał się zmienia -> dodaj margines 15% góra/dół
         double margin = range.size() * 0.15;
         p->yAxis->setRange(range.lower - margin, range.upper + margin);
     }
-
-    // Ostateczne odświeżenie (rysowanie)
     p->replot();
 }
+
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
-    // 1. Wywołujemy oryginalną obsługę zdarzenia (żeby układ okna się przeliczył)
     QMainWindow::resizeEvent(event);
+    int nowyRozmiar = this->width() / 120;
+    if (nowyRozmiar < 10) nowyRozmiar = 10;
+    if (nowyRozmiar > 25) nowyRozmiar = 25;
 
-    // 2. Obliczamy nowy rozmiar czcionki
-    // Możemy bazować na szerokości (width()) lub wysokości (height()) okna.
-    // Dzielnik (np. 60) dobieramy eksperymentalnie, żeby wyglądało dobrze.
-    // Im mniejszy dzielnik, tym większa czcionka.
+    //this->setStyleSheet(QString("QMainWindow,QWidget#centralWidget{background-color:#2b2b2b;color:#f0f0f0;}QGroupBox{background-color:#333333;border:1px solid #555555;border-radius:6px;margin-top:22px;font-weight:bold;}QGroupBox::title{subcontrol-origin:margin;subcontrol-position:top center;padding:0 5px;color:#4da6ff;background-color:transparent;}QLabel{color:#dddddd;background-color:transparent;border:none;}QDoubleSpinBox,QSpinBox,QComboBox{background-color:#454545;border:1px solid #666666;border-radius:3px;padding:4px;color:#ffffff;selection-background-color:#4da6ff;}QDoubleSpinBox:hover,QSpinBox:hover,QComboBox:hover{border:1px solid #4da6ff;}QPushButton{background-color:#404040;border:1px solid #555555;border-radius:4px;color:white;padding:6px 12px;min-height:25px;}QPushButton:hover{background-color:#505050;border:1px solid #4da6ff;}QPushButton:pressed{background-color:#2a2a2a;}QPushButton#btnStart{background-color:#2e7d32;border-color:#4caf50;}QPushButton#btnStart:hover{background-color:#388e3c;}QPushButton#btnStop{background-color:#c62828;border-color:#ef5350;}QPushButton#btnStop:hover{background-color:#d32f2f;}QStatusBar{background-color:#202020;color:#aaaaaa;border-top:1px solid #444;}QCustomPlot{border:1px solid #555555;border-radius:4px;background-color:#1e1e1e;}").arg(nowyRozmiar));
 
-    int nowyRozmiar = this->width() / 60;
-
-    // Zabezpieczenie: nie chcemy czcionki mniejszej niż np. 8 punktów
-    if (nowyRozmiar < 8) nowyRozmiar = 8;
-    // Opcjonalnie: nie większa niż np. 24 (jeśli nie chcesz gigantycznej)
-    if (nowyRozmiar > 30) nowyRozmiar = 30;
-
-    // 3. Pobieramy obecną czcionkę labela, zmieniamy rozmiar i ustawiamy z powrotem
-    QFont czcionka = ui->lblCzas->font();
-    czcionka.setPointSize(nowyRozmiar);
-    // Opcjonalnie pogrubienie:
-    czcionka.setBold(true);
-
-    ui->lblCzas->setFont(czcionka);
-    ui->label->setFont(czcionka);
-    ui->labelRozniczka->setFont(czcionka);
-    ui->label_2->setFont(czcionka);
-    ui->label_3->setFont(czcionka);
-    ui->label_4->setFont(czcionka);
-    ui->label_5->setFont(czcionka);
-    ui->label_6->setFont(czcionka);
-    ui->label_7->setFont(czcionka);
-    ui->label_8->setFont(czcionka);
-    ui->label_9->setFont(czcionka);
-
-    // Jeśli masz inne labele, które chcesz skalować, zrób to samo dla nich tutaj:
-    // ui->innyLabel->setFont(czcionka);
+        ui->lblCzas->setStyleSheet(QString("QLabel {color: #dddddd;background-color: transparent; border: none; font-size: %1pt;}").arg(nowyRozmiar));
+        ui->label->setStyleSheet(QString("QLabel {color: #dddddd;background-color: transparent; border: none; font-size: %1pt;}").arg(nowyRozmiar));
+        ui->labelRozniczka->setStyleSheet(QString("QLabel {color: #dddddd;background-color: transparent; border: none; font-size: %1pt;}").arg(nowyRozmiar));
+        ui->label_2->setStyleSheet(QString("QLabel {color: #dddddd;background-color: transparent; border: none; font-size: %1pt;}").arg(nowyRozmiar));
+        ui->label_3->setStyleSheet(QString("QLabel {color: #dddddd;background-color: transparent; border: none; font-size: %1pt;}").arg(nowyRozmiar));
+        ui->label_4->setStyleSheet(QString("QLabel {color: #dddddd;background-color: transparent; border: none; font-size: %1pt;}").arg(nowyRozmiar));
+        ui->label_5->setStyleSheet(QString("QLabel {color: #dddddd;background-color: transparent; border: none; font-size: %1pt;}").arg(nowyRozmiar));
+        ui->label_6->setStyleSheet(QString("QLabel {color: #dddddd;background-color: transparent; border: none; font-size: %1pt;}").arg(nowyRozmiar));
+        ui->label_7->setStyleSheet(QString("QLabel {color: #dddddd;background-color: transparent; border: none; font-size: %1pt;}").arg(nowyRozmiar));
+        ui->label_8->setStyleSheet(QString("QLabel {color: #dddddd;background-color: transparent; border: none; font-size: %1pt;}").arg(nowyRozmiar));
+        ui->label_9->setStyleSheet(QString("QLabel {color: #dddddd;background-color: transparent; border: none; font-size: %1pt;}").arg(nowyRozmiar));
 }

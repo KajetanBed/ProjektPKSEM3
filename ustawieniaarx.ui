@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>600</height>
+    <height>475</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>400</width>
-    <height>600</height>
+    <height>475</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>400</width>
-    <height>600</height>
+    <height>475</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -51,6 +51,12 @@ QGroupBox::title {
 
 /* --- POLA EDYCJI I ETYKIETY --- */
 QLabel {
+    color: #dddddd;
+    background-color: transparent; /* Żeby nie miały tła rodzica */
+    border: none;
+}
+
+QLineEdit {
     color: #dddddd;
     font-size: 11px;
     background-color: transparent; /* Żeby nie miały tła rodzica */
@@ -131,11 +137,23 @@ QCustomPlot {
         <widget class="QLabel" name="label">
          <property name="font">
           <font>
-           <pointsize>-1</pointsize>
+           <pointsize>22</pointsize>
+           <bold>true</bold>
           </font>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"> color: #4da6ff; /* Niebieski kolor tytułów */
+background-color: transparent;
+font-weight: bold;</string>
          </property>
          <property name="text">
           <string>USTAWIENIA ARX</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -218,11 +236,20 @@ QCustomPlot {
         <widget class="QLabel" name="label_6">
          <property name="font">
           <font>
-           <pointsize>-1</pointsize>
+           <pointsize>20</pointsize>
+           <bold>true</bold>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"> color: #4da6ff; /* Niebieski kolor tytułów */
+background-color: transparent;
+font-weight: bold;</string>
          </property>
          <property name="text">
           <string>Limity</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -330,6 +357,19 @@ QCustomPlot {
         </layout>
        </item>
       </layout>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_9">

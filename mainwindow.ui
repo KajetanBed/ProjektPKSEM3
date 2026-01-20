@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1314</width>
+    <width>1300</width>
     <height>800</height>
    </rect>
   </property>
@@ -44,12 +44,13 @@ QGroupBox::title {
 }
 
 /* --- POLA EDYCJI I ETYKIETY --- */
+
 QLabel {
     color: #dddddd;
-    font-size: 11px;
     background-color: transparent; /* Żeby nie miały tła rodzica */
     border: none;
 }
+
 
 QDoubleSpinBox, QSpinBox, QComboBox {
     background-color: #454545;
@@ -113,11 +114,17 @@ QCustomPlot {
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_4">
+   <layout class="QVBoxLayout" name="verticalLayout_5">
     <item>
      <layout class="QGridLayout" name="gridLayout_6" columnstretch="2,8">
       <item row="3" column="0">
        <widget class="QGroupBox" name="groupBox_3">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="title">
          <string>PARAMETRY PID</string>
         </property>
@@ -128,6 +135,12 @@ QCustomPlot {
             <layout class="QHBoxLayout" name="horizontalLayout_2">
              <item>
               <widget class="QLabel" name="label">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="text">
                 <string>Kp:</string>
                </property>
@@ -135,6 +148,12 @@ QCustomPlot {
              </item>
              <item>
               <widget class="QDoubleSpinBox" name="spinKp">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="maximum">
                 <double>100.000000000000000</double>
                </property>
@@ -146,6 +165,12 @@ QCustomPlot {
             <layout class="QHBoxLayout" name="horizontalLayout_3">
              <item>
               <widget class="QLabel" name="label_2">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="text">
                 <string>Ti:</string>
                </property>
@@ -153,6 +178,12 @@ QCustomPlot {
              </item>
              <item>
               <widget class="QDoubleSpinBox" name="spinTi">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="maximum">
                 <double>100.000000000000000</double>
                </property>
@@ -164,13 +195,26 @@ QCustomPlot {
             <layout class="QHBoxLayout" name="horizontalLayout_4">
              <item>
               <widget class="QLabel" name="label_3">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="text">
                 <string>Td:</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QDoubleSpinBox" name="spinTd"/>
+              <widget class="QDoubleSpinBox" name="spinTd">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -178,6 +222,12 @@ QCustomPlot {
             <layout class="QHBoxLayout" name="horizontalLayout_5">
              <item>
               <widget class="QLabel" name="labelRozniczka">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="text">
                 <string>Tryb całkowania</string>
                </property>
@@ -185,6 +235,12 @@ QCustomPlot {
              </item>
              <item>
               <widget class="QComboBox" name="boxRozniczka">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <item>
                 <property name="text">
                  <string>Stała pod całką</string>
@@ -206,6 +262,12 @@ QCustomPlot {
       </item>
       <item row="2" column="0">
        <widget class="QGroupBox" name="groupBox_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="title">
          <string>GENERATOR WARTOSCI ZADANEJ</string>
         </property>
@@ -216,6 +278,12 @@ QCustomPlot {
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <item>
               <widget class="QLabel" name="label_4">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="text">
                 <string>TYP:</string>
                </property>
@@ -223,6 +291,12 @@ QCustomPlot {
              </item>
              <item>
               <widget class="QComboBox" name="comboTyp">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <item>
                 <property name="text">
                  <string>Prostokąt</string>
@@ -241,13 +315,26 @@ QCustomPlot {
             <layout class="QHBoxLayout" name="horizontalLayout_7">
              <item>
               <widget class="QLabel" name="label_5">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="text">
                 <string>Amplituda:</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QSpinBox" name="spinAmp"/>
+              <widget class="QSpinBox" name="spinAmp">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -255,13 +342,26 @@ QCustomPlot {
             <layout class="QHBoxLayout" name="horizontalLayout_8">
              <item>
               <widget class="QLabel" name="label_6">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="text">
                 <string>Okres:</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QSpinBox" name="spinOkres"/>
+              <widget class="QSpinBox" name="spinOkres">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -269,6 +369,12 @@ QCustomPlot {
             <layout class="QHBoxLayout" name="horizontalLayout_9">
              <item>
               <widget class="QLabel" name="label_7">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="text">
                 <string>Wypłnienie:</string>
                </property>
@@ -276,6 +382,12 @@ QCustomPlot {
              </item>
              <item>
               <widget class="QDoubleSpinBox" name="spinWypelnienie">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="maximum">
                 <double>1.000000000000000</double>
                </property>
@@ -291,24 +403,14 @@ QCustomPlot {
         </layout>
        </widget>
       </item>
-      <item row="0" column="1" rowspan="4">
-       <layout class="QGridLayout" name="gridLayout_5">
-        <item row="0" column="0">
-         <widget class="QCustomPlot" name="chartWykres1" native="true"/>
-        </item>
-        <item row="0" column="1">
-         <widget class="QCustomPlot" name="chartwykres3" native="true"/>
-        </item>
-        <item row="1" column="0">
-         <widget class="QCustomPlot" name="chartWykres2" native="true"/>
-        </item>
-        <item row="1" column="1">
-         <widget class="QCustomPlot" name="chartWykres4" native="true"/>
-        </item>
-       </layout>
-      </item>
       <item row="1" column="0">
        <widget class="QGroupBox" name="groupBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="title">
          <string>PARAMETRY SYMULACJI:</string>
         </property>
@@ -319,6 +421,12 @@ QCustomPlot {
             <layout class="QHBoxLayout" name="horizontalLayout_10">
              <item>
               <widget class="QLabel" name="label_8">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="text">
                 <string>Interwal:</string>
                </property>
@@ -326,6 +434,12 @@ QCustomPlot {
              </item>
              <item>
               <widget class="QSpinBox" name="spinInterwal">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="minimum">
                 <number>10</number>
                </property>
@@ -346,6 +460,12 @@ QCustomPlot {
             <layout class="QHBoxLayout" name="horizontalLayout_11">
              <item>
               <widget class="QLabel" name="label_9">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="text">
                 <string>Stała czasowa:</string>
                </property>
@@ -353,6 +473,12 @@ QCustomPlot {
              </item>
              <item>
               <widget class="QDoubleSpinBox" name="spinStala">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="minimum">
                 <double>-100.000000000000000</double>
                </property>
@@ -423,6 +549,12 @@ QCustomPlot {
       </item>
       <item row="0" column="0">
        <widget class="QGroupBox" name="STATUS">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="title">
          <string>STATUS</string>
         </property>
@@ -430,18 +562,52 @@ QCustomPlot {
          <item row="0" column="0">
           <widget class="QLabel" name="lblCzas">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+            <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
            <property name="text">
-            <string>TextLabel</string>
+            <string/>
            </property>
           </widget>
          </item>
         </layout>
        </widget>
+      </item>
+      <item row="0" column="1" rowspan="4">
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="0">
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QCustomPlot" name="chartWykres1" native="true">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_12">
+            <item>
+             <widget class="QCustomPlot" name="chartWykres2" native="true">
+              <property name="font">
+               <font>
+                <bold>false</bold>
+               </font>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCustomPlot" name="chartwykres3" native="true"/>
+            </item>
+            <item>
+             <widget class="QCustomPlot" name="chartWykres4" native="true"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
