@@ -22,6 +22,9 @@ public:
     void setWielomianB(const std::vector<double> &b);
     void setK(int k);
     void setSzum(double stdev);
+    void setLimityAktywne(bool aktywne);
+    void setLimityWejscia(double min, double max);
+    void setLimityWyjscia(double min, double max);
 
     // Metody do pobierania danych po zatwierdzeniu
     std::vector<double> getA() const;

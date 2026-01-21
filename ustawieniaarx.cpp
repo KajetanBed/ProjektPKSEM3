@@ -43,6 +43,22 @@ void UstawieniaARX::setWielomianA(const std::vector<double> &a) { ui->leA->setTe
 void UstawieniaARX::setWielomianB(const std::vector<double> &b) { ui->leB->setText(wektorNaTekst(b)); }
 void UstawieniaARX::setK(int k) { ui->spinK->setValue(k); }
 void UstawieniaARX::setSzum(double s) { ui->spinSzum->setValue(s); }
+void UstawieniaARX::setLimityAktywne(bool aktywne)
+{
+    ui->checkLimity->setChecked(aktywne);
+}
+
+void UstawieniaARX::setLimityWejscia(double min, double max)
+{
+    ui->spinUmin->setValue(min);
+    ui->spinUmax->setValue(max);
+}
+
+void UstawieniaARX::setLimityWyjscia(double min, double max)
+{
+    ui->spinYmin->setValue(min);
+    ui->spinYmax->setValue(max);
+}
 
 //GETTERY
 std::vector<double> UstawieniaARX::getA() const { return parsujWektor(ui->leA->text()); }

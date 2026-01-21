@@ -192,6 +192,9 @@ void MainWindow::on_btnUstawieniaARX_clicked()
     okno.setWielomianB(warstwaUslug->getArxB());
     okno.setK(warstwaUslug->getArxK());
     okno.setSzum(warstwaUslug->getArxNoise());
+    okno.setLimityAktywne(warstwaUslug->getArxLimitsActive());
+    okno.setLimityWejscia(warstwaUslug->getArxUMin(), warstwaUslug->getArxUMax());
+    okno.setLimityWyjscia(warstwaUslug->getArxYMin(), warstwaUslug->getArxYMax());
 
     if (okno.exec() == QDialog::Accepted)
     {
