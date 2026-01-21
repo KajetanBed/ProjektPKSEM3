@@ -29,13 +29,14 @@ private slots:
     void on_btnWczytaj_clicked();
     void on_btnResetCalki_clicked();
     void aktualizujSymulacje();
+    void on_parametryChanged();
 
 private:
     Ui::MainWindow *ui;
 
     // UAR *symulatorUAR;  <-- USUNIĘTE
     WarstwaU *warstwaUslug;
-    QTimer *timerSymulacji;
+
 
     double aktualnyCzas;
     double y_prev;

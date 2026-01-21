@@ -1,21 +1,39 @@
 #pragma once
+#include <QObject> // <-- Ważne
+#include <QTimer>  // <-- Ważne
 #include <vector>
 #include "ARX.h"
 #include "GWZ.h"
 #include "PID.h"
 #include "UAR.h"
 
-class WarstwaU
+// Dziedziczymy po QObject, aby obsługiwać sygnały i timery
+class WarstwaU : public QObject
 {
+    Q_OBJECT // Makro wymagane dla sygnałów/slotów
+
 private:
-    UAR *symulator; // WarstwaU jest teraz właścicielem obiektu UAR
+    UAR *symulator;
+    QTimer *zegarSymulacji; // Timer teraz jest tutaj
 
 public:
-    WarstwaU();
-    ~WarstwaU(); // Destruktor do posprzątania po UAR
+    explicit WarstwaU(QObject *parent = nullptr); // Konstruktor z rodzicem Qt
+    ~WarstwaU();
+
+    // --- STEROWANIE SYMULACJĄ ---
+    void startSymulacji(int interwalMs);
+    void stopSymulacji();
+    void setInterwalSymulacji(int ms);
+    bool czySymulacjaDziala() const;
+    double getInterwalSekundy() const; // Pomocnicze dla obliczeń dt
+
+signals:
+    // Sygnał wysyłany co tyknięcie zegara -> łapie go MainWindow
+    void zadanieOdswiezenia();
+
+public:
 
     // --- ARX ---
-    // Usunięto argument 'UAR* uar' ze wszystkich metod
     void setArxA(const std::vector<double> &a);
     void setArxB(const std::vector<double> &b);
     void setArxK(int k);
@@ -30,12 +48,12 @@ public:
     std::vector<double> getArxB();
     int getArxK();
     double getArxNoise();
+    bool getArxLimitsActive();
+    bool getArxNoiseActive();
     double getArxUMin();
     double getArxUMax();
     double getArxYMin();
     double getArxYMax();
-    bool getArxLimitsActive();
-    bool getArxNoiseActive();
 
     // --- GWZ ---
     void setGwzAmplitude(double A);
@@ -55,9 +73,9 @@ public:
     double PIDgetI();
     double PIDgetD();
     void setPidMode(PID::trybCalki tryb);
+    PID::trybCalki getPidMode();
     void resetPid();
     double calculatePID(double uchyb, double dt);
-    PID::trybCalki getPidMode();
 
     // --- UAR ---
     double simulateUAR(double zadanie);

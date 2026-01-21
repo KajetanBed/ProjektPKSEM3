@@ -18,27 +18,25 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // Inicjalizacja parametrów ARX/PID została przeniesiona do konstruktora WarstwaU
-    // symulatorUAR = new UAR(...); <-- USUNIĘTE
+    // 1. Inicjalizacja logiki (Warstwa Usług)
+    warstwaUslug = new WarstwaU(this);
 
-    warstwaUslug = new WarstwaU(); // WarstwaU tworzy sobie UAR wewnątrz
+    // Połączenie sygnału z timera w WarstwieU do funkcji obliczeniowej w GUI
+    connect(warstwaUslug, &WarstwaU::zadanieOdswiezenia, this, &MainWindow::aktualizujSymulacje);
 
-    timerSymulacji = new QTimer(this);
-    connect(timerSymulacji, &QTimer::timeout, this, &MainWindow::aktualizujSymulacje);
+    // Inicjalizacja zmiennych pomocniczych
     aktualnyCzas = 0.0;
     y_prev = 0.0;
 
-    // --- Konfiguracja wykresów (bez zmian) ---
+    // 2. Konfiguracja wykresów (QCustomPlot)
     setupPlot(ui->chartWykres1, "Regulacja", "Wartość");
     ui->chartWykres1->addGraph();
     ui->chartWykres1->graph(0)->setPen(QPen(Qt::red));
-    ui->chartWykres1->graph(0)->setName("Zadana");
-
+    ui->chartWykres1->graph(0)->setName("Zadana (w)");
     ui->chartWykres1->addGraph();
     ui->chartWykres1->graph(1)->setPen(QPen(Qt::blue));
-    ui->chartWykres1->graph(1)->setName("Wyjście");
+    ui->chartWykres1->graph(1)->setName("Wyjście (y)");
     ui->chartWykres1->legend->setVisible(true);
-
 
     setupPlot(ui->chartWykres2, "Uchyb", "e");
     ui->chartWykres2->addGraph();
@@ -50,23 +48,36 @@ MainWindow::MainWindow(QWidget *parent)
 
     setupPlot(ui->chartWykres4, "Składowe PID", "Wartość");
     ui->chartWykres4->addGraph();
-    ui->chartWykres4->graph(0)->setPen(QPen(Qt::red)); ui->chartWykres4->graph(0)->setName("P");
+    ui->chartWykres4->graph(0)->setPen(QPen(Qt::red));   ui->chartWykres4->graph(0)->setName("P");
     ui->chartWykres4->addGraph();
     ui->chartWykres4->graph(1)->setPen(QPen(Qt::green)); ui->chartWykres4->graph(1)->setName("I");
     ui->chartWykres4->addGraph();
-    ui->chartWykres4->graph(2)->setPen(QPen(Qt::blue)); ui->chartWykres4->graph(2)->setName("D");
+    ui->chartWykres4->graph(2)->setPen(QPen(Qt::blue));  ui->chartWykres4->graph(2)->setName("D");
     ui->chartWykres4->legend->setVisible(true);
 
-    connect(ui->btnStart, &QPushButton::clicked, this, &MainWindow::on_btnStart_clicked);
-    connect(ui->btnStop, &QPushButton::clicked, this, &MainWindow::on_btnStop_clicked);
-    connect(ui->btnReset, &QPushButton::clicked, this, &MainWindow::on_btnReset_clicked);
 
+    // Sygnał editingFinished() gwarantuje, że zmiana nastąpi po Enterze
+    connect(ui->spinKp, &QDoubleSpinBox::editingFinished, this, &MainWindow::on_parametryChanged);
+    connect(ui->spinTi, &QDoubleSpinBox::editingFinished, this, &MainWindow::on_parametryChanged);
+    connect(ui->spinTd, &QDoubleSpinBox::editingFinished, this, &MainWindow::on_parametryChanged);
+
+    connect(ui->spinAmp, &QDoubleSpinBox::editingFinished, this, &MainWindow::on_parametryChanged);
+    connect(ui->spinOkres, &QDoubleSpinBox::editingFinished, this, &MainWindow::on_parametryChanged);
+    connect(ui->spinStala, &QDoubleSpinBox::editingFinished, this, &MainWindow::on_parametryChanged);
+    connect(ui->spinWypelnienie, &QDoubleSpinBox::editingFinished, this, &MainWindow::on_parametryChanged);
+
+    // Dla ComboBoxów reagujemy na zmianę wyboru (klinięcie w listę)
+    connect(ui->comboTyp, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::on_parametryChanged);
+    connect(ui->boxRozniczka, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::on_parametryChanged);
+
+    // Interwał symulacji
+    connect(ui->spinInterwal, QOverload<int>::of(&QSpinBox::valueChanged), this, &MainWindow::on_parametryChanged);
+
+    // 5. Pierwsza synchronizacja parametrów z UI do logiki
+    on_parametryChanged();
 }
-
 MainWindow::~MainWindow()
 {
-    delete warstwaUslug;
-    // delete symulatorUAR; <-- USUNIĘTE (WarstwaU posprząta)
     delete ui;
 }
 
@@ -79,50 +90,23 @@ void MainWindow::setupPlot(QCustomPlot *plot, QString tytul, QString yLabel)
     plot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
 }
 
-void MainWindow::on_btnStop_clicked() { timerSymulacji->stop(); }
-
+void MainWindow::on_btnStop_clicked()
+{
+    warstwaUslug->stopSymulacji();
+}
 void MainWindow::aktualizujSymulacje()
 {
-    // 1. Pobieranie parametrów (bez zmian)
-    warstwaUslug->setPidK(ui->spinKp->value());
-    warstwaUslug->setPidTI(ui->spinTi->value());
-    warstwaUslug->setPidTD(ui->spinTd->value());
 
-    warstwaUslug->setGwzAmplitude(ui->spinAmp->value());
-    warstwaUslug->setGwzPeriod(ui->spinOkres->value());
-    warstwaUslug->setGwzWypelnienie(ui->spinWypelnienie->value());
-    warstwaUslug->setGwzStala(ui->spinStala->value());
-
-    if (ui->comboTyp->currentIndex() == 0)
-        warstwaUslug->setGwzType(TypSygnalu::SygnalProstokatny);
-    else
-        warstwaUslug->setGwzType(TypSygnalu::Sinusoida);
-
-    if (ui->boxRozniczka->currentIndex() == 0)
-        warstwaUslug->setPidMode(PID::trybCalki::wew);
-    else
-        warstwaUslug->setPidMode(PID::trybCalki::zew);
-
-    warstwaUslug->setGwzTT(timerSymulacji->interval());
-    int nowyInterwal = ui->spinInterwal->value();
-    if (nowyInterwal >= 10 && timerSymulacji->interval() != nowyInterwal)
-    {
-        timerSymulacji->setInterval(nowyInterwal);
-    }
-
-    // 2. Obliczenia (bez zmian)
+    double dt = warstwaUslug->getInterwalSekundy();
     double w = warstwaUslug->generateGwz();
     double e = w - y_prev;
-    double dt = timerSymulacji->interval() / 1000.0;
     double u = warstwaUslug->calculatePID(e, dt);
-
     double valP = warstwaUslug->PIDgetP();
     double valI = warstwaUslug->PIDgetI();
     double valD = warstwaUslug->PIDgetD();
 
     double y = warstwaUslug->calculateARX(u);
     y_prev = y;
-
     // 3. Dodawanie danych (bez zmian)
     ui->chartWykres1->graph(0)->addData(aktualnyCzas, w);
     ui->chartWykres1->graph(1)->addData(aktualnyCzas, y);
@@ -166,10 +150,8 @@ void MainWindow::aktualizujSymulacje()
 void MainWindow::on_btnStart_clicked()
 {
     int interwal = ui->spinInterwal->value();
-    if (interwal < 10) interwal = 10;
-    timerSymulacji->start(interwal);
+    warstwaUslug->startSymulacji(interwal); // Zlecamy start warstwie logiki
 }
-
 void MainWindow::on_btnResetCalki_clicked()
 {
     warstwaUslug->resetPid();
@@ -177,12 +159,10 @@ void MainWindow::on_btnResetCalki_clicked()
 
 void MainWindow::on_btnReset_clicked()
 {
-    timerSymulacji->stop();
-    if (warstwaUslug)
-    {
-        warstwaUslug->resetGwz();
-        warstwaUslug->resetPid();
-    }
+    warstwaUslug->stopSymulacji(); // Stop w warstwie U
+
+    warstwaUslug->resetGwz();
+    warstwaUslug->resetPid();
     aktualnyCzas = 0.0;
     y_prev = 0.0;
     ui->lblCzas->setText("Czas: 0.00 s");
@@ -445,4 +425,31 @@ void MainWindow::resizeEvent(QResizeEvent *event)
         ui->label_7->setStyleSheet(QString("QLabel {color: #dddddd;background-color: transparent; border: none; font-size: %1pt;}").arg(nowyRozmiar));
         ui->label_8->setStyleSheet(QString("QLabel {color: #dddddd;background-color: transparent; border: none; font-size: %1pt;}").arg(nowyRozmiar));
         ui->label_9->setStyleSheet(QString("QLabel {color: #dddddd;background-color: transparent; border: none; font-size: %1pt;}").arg(nowyRozmiar));
+}
+void MainWindow::on_parametryChanged()
+{
+    // Pobieramy wartości tylko wtedy, gdy ta metoda zostanie wywołana (np. przez Enter)
+    warstwaUslug->setPidK(ui->spinKp->value());
+    warstwaUslug->setPidTI(ui->spinTi->value());
+    warstwaUslug->setPidTD(ui->spinTd->value());
+
+    warstwaUslug->setGwzAmplitude(ui->spinAmp->value());
+    warstwaUslug->setGwzPeriod(ui->spinOkres->value());
+    warstwaUslug->setGwzWypelnienie(ui->spinWypelnienie->value());
+    warstwaUslug->setGwzStala(ui->spinStala->value());
+
+    if (ui->comboTyp->currentIndex() == 0)
+        warstwaUslug->setGwzType(TypSygnalu::SygnalProstokatny);
+    else
+        warstwaUslug->setGwzType(TypSygnalu::Sinusoida);
+
+    if (ui->boxRozniczka->currentIndex() == 0)
+        warstwaUslug->setPidMode(PID::trybCalki::wew);
+    else
+        warstwaUslug->setPidMode(PID::trybCalki::zew);
+
+    warstwaUslug->setGwzTT(ui->spinInterwal->value());
+    warstwaUslug->setInterwalSymulacji(ui->spinInterwal->value());
+
+    ui->statusbar->showMessage("Parametry zaktualizowane!", 2000);
 }
