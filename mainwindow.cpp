@@ -66,12 +66,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->spinStala, &QDoubleSpinBox::editingFinished, this, &MainWindow::on_parametryChanged);
     connect(ui->spinWypelnienie, &QDoubleSpinBox::editingFinished, this, &MainWindow::on_parametryChanged);
 
+    connect(ui->spinInterwal, &QDoubleSpinBox::editingFinished, this, &MainWindow::on_parametryChanged);
     // Dla ComboBoxów reagujemy na zmianę wyboru (klinięcie w listę)
     connect(ui->comboTyp, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::on_parametryChanged);
     connect(ui->boxRozniczka, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::on_parametryChanged);
 
     // Interwał symulacji
-    connect(ui->spinInterwal, QOverload<int>::of(&QSpinBox::valueChanged), this, &MainWindow::on_parametryChanged);
+
 
     // 5. Pierwsza synchronizacja parametrów z UI do logiki
     on_parametryChanged();
@@ -368,6 +369,7 @@ void MainWindow::on_btnWczytaj_clicked()
     // --- 4. POZOSTAŁE ---
     if (root.contains("Interwal")) {
         ui->spinInterwal->setValue(root["Interwal"].toInt());
+        warstwaUslug->setGwzTT(ui->spinInterwal->value());
     }
 
     // Reset i odświeżenie symulacji

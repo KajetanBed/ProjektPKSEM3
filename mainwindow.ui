@@ -577,7 +577,7 @@ QCustomPlot {
             </sizepolicy>
            </property>
            <property name="text">
-            <string/>
+            <string>Czas: 0.00 s</string>
            </property>
           </widget>
          </item>
