@@ -378,31 +378,21 @@ void MainWindow::on_btnWczytaj_clicked()
 
     QMessageBox::information(this, "Sukces", "Wczytano pełną konfigurację.");
 }
-void MainWindow::skalujWykres(QCustomPlot *p, double minSpan)
+
+void MainWindow::skalujWykres(QCustomPlot *wykres, double minSpan)
 {
-    if (!p) return;
-    if (p->graphCount() == 0) return;
-    bool found = false;
-    QCPRange range = p->graph(0)->getValueRange(found);
-    for (int i = 1; i < p->graphCount(); ++i)
-    {
-        bool f;
-        QCPRange r = p->graph(i)->getValueRange(f);
-        if (f)
-            range.expand(r);
+    if(!wykres || wykres->graphCount()==0 )return;
+
+    wykres->yAxis->rescale(true);
+    QCPRange zakres = wykres->yAxis->range();
+    if(zakres.size() < 0.001){
+        wykres->yAxis->setRange(zakres.center(), minSpan, Qt::AlignCenter);
+    }
+    else{
+        wykres->yAxis->scaleRange(1.3);
     }
 
-    if (!found || range.size() < 0.001)
-    {
-        double center = (found) ? range.center() : 0.0;
-        p->yAxis->setRange(center - minSpan / 2.0, center + minSpan / 2.0);
-    }
-    else
-    {
-        double margin = range.size() * 0.15;
-        p->yAxis->setRange(range.lower - margin, range.upper + margin);
-    }
-    p->replot();
+    wykres->replot();
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
