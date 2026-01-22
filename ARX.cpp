@@ -3,8 +3,8 @@
 #include <numeric>
 #include <cassert>
 
-ARX::ARX(vector<double> _a, vector<double> _b, int _k) : a(_a), b(_b), k(_k), generator(std::random_device{}()), distribution{0.0, 0.01},
-                                                         stanSzumu(false), stanLimitow(true), uMin(-10.0), uMax(10.0), yMin(-10.0), yMax(10.0)
+ARX::ARX(vector<double> _a, vector<double> _b, int _k) : a(_a), b(_b), k(_k), generator(std::random_device{}()), stanLimitow(true),
+                                                         stanSzumu(false), distribution{0.0, 0.01}, uMin(-10.0), uMax(10.0), yMin(-10.0), yMax(10.0)
 {
     assert(a.size() >= 3 && "Wektor a musi miec co najmniej 3 elementy");
     assert(b.size() >= 3 && "Wektor b musi miec co najmniej 3 elementy");
@@ -33,7 +33,7 @@ double ARX::symuluj(double u)
     // obliczenie czesci przy A
     y -= std::inner_product(a.begin(), a.end(), yHist.begin(), 0.0);
 
-    if (stanSzumu)
+    if (stanSzumu == true)
     {
         y += generujSzum();
     }
@@ -44,6 +44,13 @@ double ARX::symuluj(double u)
     yHist.push_front(y);
     yHist.pop_back();
     return y;
+}
+
+void ARX::ustawAmplitudeSzumu(double amp)
+{
+    // Tworzymy nowy rozkład z nowym odchyleniem standardowym (średnia 0.0)
+    if(amp < 0) amp = 0; // Zabezpieczenie
+    distribution = std::normal_distribution<double>(0.0, amp);
 }
 
 double ARX::generujSzum()
@@ -63,23 +70,31 @@ double ARX::zastosujLimity(double min, double max, double wartosc)
 void ARX::ustawParametry(vector<double> newA, vector<double> newB, int newK)
 {
     a = newA;
+    yHist.resize(a.size(), 0.0);
+
     b = newB;
+    uHist.resize(b.size(), 0.0);
+
     k = newK;
+    kBuffer.resize(k, 0.0);
 }
 
 void ARX::ustawA(vector<double> newA)
 {
     a = newA;
+    yHist.resize(a.size(), 0.0);
 }
 
 void ARX::ustawB(vector<double> newB)
 {
     b = newB;
+    uHist.resize(b.size(), 0.0);
 }
 
 void ARX::ustawOpoznienie(int newK)
 {
     k = newK;
+    kBuffer.resize(k,0.0);
 }
 
 void ARX::przelaczLimity(bool stan)

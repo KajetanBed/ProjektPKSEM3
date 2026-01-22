@@ -43,6 +43,7 @@ public:
     void setArxOutputLimit(double Min, double Max);
     void toggleArxLimits(bool stan);
     void toggleArxNoise(bool stan);
+    void setArxNoiseAmplitude(double amp);
     double calculateARX(double u);
     std::vector<double> getArxA();
     std::vector<double> getArxB();

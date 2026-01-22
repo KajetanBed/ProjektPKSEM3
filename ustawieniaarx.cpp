@@ -42,7 +42,10 @@ QString UstawieniaARX::wektorNaTekst(const std::vector<double> &vec)
 void UstawieniaARX::setWielomianA(const std::vector<double> &a) { ui->leA->setText(wektorNaTekst(a)); }
 void UstawieniaARX::setWielomianB(const std::vector<double> &b) { ui->leB->setText(wektorNaTekst(b)); }
 void UstawieniaARX::setK(int k) { ui->spinK->setValue(k); }
-void UstawieniaARX::setSzum(double s) { ui->spinSzum->setValue(s); }
+void UstawieniaARX::setSzumAmp(double s) { ui->spinSzum->setValue(s); }
+
+void UstawieniaARX::setSzumAktywny(bool akt) { ui->checkSzum->setChecked(akt); }
+
 void UstawieniaARX::setLimityAktywne(bool aktywne)
 {
     ui->checkLimity->setChecked(aktywne);
@@ -64,7 +67,8 @@ void UstawieniaARX::setLimityWyjscia(double min, double max)
 std::vector<double> UstawieniaARX::getA() const { return parsujWektor(ui->leA->text()); }
 std::vector<double> UstawieniaARX::getB() const { return parsujWektor(ui->leB->text()); }
 int UstawieniaARX::getK() const { return ui->spinK->value(); }
-double UstawieniaARX::getSzum() const { return ui->spinSzum->value(); }
+double UstawieniaARX::getSzumAmp() const { return ui->spinSzum->value(); }
+bool UstawieniaARX::getSzumAktywny() const { return ui->checkSzum->isChecked(); }
 bool UstawieniaARX::getLimityAktywne() const { return ui->checkLimity->isChecked(); }
 double UstawieniaARX::getUmin() const { return ui->spinUmin->value(); }
 double UstawieniaARX::getUmax() const { return ui->spinUmax->value(); }

@@ -191,7 +191,8 @@ void MainWindow::on_btnUstawieniaARX_clicked()
     okno.setWielomianA(warstwaUslug->getArxA());
     okno.setWielomianB(warstwaUslug->getArxB());
     okno.setK(warstwaUslug->getArxK());
-    okno.setSzum(warstwaUslug->getArxNoise());
+    okno.setSzumAmp(warstwaUslug->getArxNoise());
+    okno.setSzumAktywny(warstwaUslug->getArxNoiseActive());
     okno.setLimityAktywne(warstwaUslug->getArxLimitsActive());
     okno.setLimityWejscia(warstwaUslug->getArxUMin(), warstwaUslug->getArxUMax());
     okno.setLimityWyjscia(warstwaUslug->getArxYMin(), warstwaUslug->getArxYMax());
@@ -201,10 +202,9 @@ void MainWindow::on_btnUstawieniaARX_clicked()
         warstwaUslug->setArxA(okno.getA());
         warstwaUslug->setArxB(okno.getB());
         warstwaUslug->setArxDelay(okno.getK());
-        warstwaUslug->toggleArxNoise(okno.getSzum() > 0.0);
-        // Uwaga: ARX ma generator szumu wewnatrz, tutaj przekazujesz tylko bool,
-        // ale w ARX.h widać distribution(0, 0.01). Jeśli chcesz zmieniać amplitudę szumu,
-        // musiałbyś dodać metodę setSzumAmplituda w ARX i WarstwieU.
+        warstwaUslug->setArxNoiseAmplitude(okno.getSzumAmp());
+        warstwaUslug->toggleArxNoise(okno.getSzumAktywny());
+
 
         double uMin = okno.getUmin();
         double uMax = okno.getUmax();
@@ -352,6 +352,9 @@ void MainWindow::on_btnWczytaj_clicked()
         if (jsonARX.contains("SzumAktywny")) {
             warstwaUslug->toggleArxNoise(jsonARX["SzumAktywny"].toBool());
         }
+        if (jsonARX.contains("SzumAmplituda")) {
+                    warstwaUslug->setArxNoiseAmplitude(jsonARX["SzumAmplituda"].toDouble());
+                }
 
         // Limity
         if (jsonARX.contains("Limity")) {

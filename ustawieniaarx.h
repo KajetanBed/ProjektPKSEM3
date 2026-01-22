@@ -21,7 +21,8 @@ public:
     void setWielomianA(const std::vector<double> &a);
     void setWielomianB(const std::vector<double> &b);
     void setK(int k);
-    void setSzum(double stdev);
+    void setSzumAmp(double stdev);
+    void setSzumAktywny(bool act);
     void setLimityAktywne(bool aktywne);
     void setLimityWejscia(double min, double max);
     void setLimityWyjscia(double min, double max);
@@ -30,8 +31,8 @@ public:
     std::vector<double> getA() const;
     std::vector<double> getB() const;
     int getK() const;
-    double getSzum() const;
-
+    double getSzumAmp() const;
+    bool getSzumAktywny() const;
     // Obsługa limitów
     bool getLimityAktywne() const;
     double getUmin() const;

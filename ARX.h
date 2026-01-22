@@ -18,7 +18,7 @@ private:
     double yMin, yMax;
     bool stanLimitow;
 
-    double amplitudaSzumu;
+    double amplitudaSzumu = 0.0;
     bool stanSzumu;
     mt19937 generator;
     normal_distribution<double> distribution;
@@ -36,6 +36,7 @@ public:
     void ustawA(vector<double>);
     void ustawB(vector<double>);
     void ustawOpoznienie(int);
+    void ustawAmplitudeSzumu(double amp);
 
     void ustawLimitWejscia(double, double);
     void ustawLimitWyjscia(double, double);

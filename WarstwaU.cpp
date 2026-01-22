@@ -90,6 +90,7 @@ void WarstwaU::setArxInputLimit(double Min, double Max) { symulator->getARX().us
 void WarstwaU::setArxOutputLimit(double Min, double Max) { symulator->getARX().ustawLimitWyjscia(Min, Max); }
 void WarstwaU::toggleArxLimits(bool stan) { symulator->getARX().przelaczLimity(stan); }
 void WarstwaU::toggleArxNoise(bool stan) { symulator->getARX().przelaczSzum(stan); }
+void WarstwaU::setArxNoiseAmplitude(double amp) { symulator->getARX().ustawAmplitudeSzumu(amp);}
 double WarstwaU::calculateARX(double u) { return symulator->getARX().symuluj(u); }
 std::vector<double> WarstwaU::getArxA() { return symulator->getARX().getA(); }
 std::vector<double> WarstwaU::getArxB() { return symulator->getARX().getB(); }

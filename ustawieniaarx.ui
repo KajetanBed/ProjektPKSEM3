@@ -226,6 +226,26 @@ font-weight: bold;</string>
            </item>
           </layout>
          </item>
+         <item>
+          <spacer name="verticalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkSzum">
+           <property name="text">
+            <string>Szum aktywny</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
       </layout>
