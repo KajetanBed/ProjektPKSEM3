@@ -14,7 +14,7 @@ class WarstwaU : public QObject
 
 private:
     UAR *symulator;
-    QTimer *zegarSymulacji; // Timer teraz jest tutaj
+    QTimer *zegarSymulacji;
 
 public:
     explicit WarstwaU(QObject *parent = nullptr); // Konstruktor z rodzicem Qt

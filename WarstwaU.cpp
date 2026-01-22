@@ -64,13 +64,10 @@ double WarstwaU::getInterwalSekundy() const
     return zegarSymulacji->interval() / 1000.0;
 }
 
-// ... (RESZTA METOD GET/SET/CALCULATE POZOSTAJE BEZ ZMIAN - SKOPIUJ JE Z POPRZEDNIEJ WERSJI) ...
-// Poniżej wklejam przykładowe, żebyś wiedział gdzie jesteśmy:
 
 void WarstwaU::setArxA(const std::vector<double> &a) { symulator->getARX().ustawA(a); }
 void WarstwaU::setArxB(const std::vector<double> &b) { symulator->getARX().ustawB(b); }
 void WarstwaU::setArxK(int k) { symulator->getARX().ustawOpoznienie(k); }
-// ... itd. dla wszystkich metod ...
 void WarstwaU::setArxDelay(int k) { symulator->getARX().ustawOpoznienie(k); }
 
 // --- Implementacja brakujących getterów ARX do zapisu ---
