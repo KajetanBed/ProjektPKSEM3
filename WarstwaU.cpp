@@ -23,14 +23,14 @@ WarstwaU::WarstwaU(QObject *parent) : QObject(parent)
     // --- KONFIGURACJA TIMERA ---
     zegarSymulacji = new QTimer(this);
 
-    // Kiedy timer tyknie -> emituj sygnał do świata (czyli do MainWindow)
+
     connect(zegarSymulacji, &QTimer::timeout, this, &WarstwaU::zadanieOdswiezenia);
 }
 
 WarstwaU::~WarstwaU()
 {
     if (symulator) delete symulator;
-    // zegarSymulacji usunie się sam, bo jest dzieckiem (this)
+
 }
 
 // ------------------- STEROWANIE TIMEREM -------------------

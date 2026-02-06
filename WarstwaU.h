@@ -1,23 +1,22 @@
 #pragma once
-#include <QObject> // <-- Ważne
-#include <QTimer>  // <-- Ważne
+#include <QObject>
+#include <QTimer>
 #include <vector>
 #include "ARX.h"
 #include "GWZ.h"
 #include "PID.h"
 #include "UAR.h"
 
-// Dziedziczymy po QObject, aby obsługiwać sygnały i timery
 class WarstwaU : public QObject
 {
-    Q_OBJECT // Makro wymagane dla sygnałów/slotów
+    Q_OBJECT
 
 private:
     UAR *symulator;
     QTimer *zegarSymulacji;
 
 public:
-    explicit WarstwaU(QObject *parent = nullptr); // Konstruktor z rodzicem Qt
+    explicit WarstwaU(QObject *parent = nullptr);
     ~WarstwaU();
 
     // --- STEROWANIE SYMULACJĄ ---
@@ -25,10 +24,9 @@ public:
     void stopSymulacji();
     void setInterwalSymulacji(int ms);
     bool czySymulacjaDziala() const;
-    double getInterwalSekundy() const; // Pomocnicze dla obliczeń dt
+    double getInterwalSekundy() const;
 
 signals:
-    // Sygnał wysyłany co tyknięcie zegara -> łapie go MainWindow
     void zadanieOdswiezenia();
 
 public:

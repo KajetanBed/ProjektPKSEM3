@@ -50,8 +50,7 @@ double GeneratorWartosciZadanej::obliczSygnal()
     }
     else if (typ == TypSygnalu::SygnalProstokatny)
     {
-        // w_i = A+S gdy modT < pT
-        // w_i = S    w przeciwnym wypadku
+
         if (modT < p * T)
             Wi = A + S;
         else
@@ -70,8 +69,8 @@ void GeneratorWartosciZadanej::przeliczOkresDyskretny()
         return;
     }
 
-    double Td = TRZ * 1000.0 / TT;   // liczba próbek na okres
-    T = max(1, (int)std::round(Td)); // T musi być >= 1
+    double Td = TRZ * 1000.0 / TT;
+    T = max(1, (int)std::round(Td));
 }
 
 void GeneratorWartosciZadanej::reset() { i = 0; }

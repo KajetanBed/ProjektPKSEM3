@@ -48,7 +48,7 @@ double ARX::symuluj(double u)
 
 void ARX::ustawAmplitudeSzumu(double amp)
 {
-    // Tworzymy nowy rozkład z nowym odchyleniem standardowym (średnia 0.0)
+
     if(amp < 0) amp = 0; // Zabezpieczenie
     distribution = std::normal_distribution<double>(0.0, amp);
 }

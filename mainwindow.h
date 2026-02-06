@@ -34,7 +34,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    // UAR *symulatorUAR;  <-- USUNIĘTE
+
     WarstwaU *warstwaUslug;
 
 

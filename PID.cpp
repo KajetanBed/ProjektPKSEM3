@@ -4,7 +4,7 @@
 PID::PID(double _k, double _TI, double _TD)
     : k(_k), TI(_TI), TD(_TD), typCalkowania(trybCalki::wew),
       sumaUchybu(0.0), poprzedniUchyb(0.0),
-      lastP(0.0), lastI(0.0), lastD(0.0) // Inicjalizacja
+      lastP(0.0), lastI(0.0), lastD(0.0)
 {
 }
 
@@ -31,7 +31,7 @@ void PID::resetujSumeUchybu()
 {
     sumaUchybu = 0.0;
     poprzedniUchyb = 0.0;
-    lastI = 0.0; // Reset też tutaj
+    lastI = 0.0;
 }
 
 double PID::oblicz(double uchyb, double dt)
@@ -46,12 +46,12 @@ double PID::oblicz(double uchyb, double dt)
     {
         if (typCalkowania == trybCalki::zew)
         {
-            sumaUchybu += uchyb * dt;
+            sumaUchybu += uchyb;
             Itemp = sumaUchybu / TI;
         }
         else
         {
-            sumaUchybu += (uchyb / TI) * dt;
+            sumaUchybu += (uchyb / TI);
             Itemp = sumaUchybu;
         }
     }
@@ -59,10 +59,10 @@ double PID::oblicz(double uchyb, double dt)
     uI = k * Itemp;
 
     // Obliczenie D
-    double uD = k * TD * ((uchyb - poprzedniUchyb) / dt);
+    double uD = k * TD * ((uchyb - poprzedniUchyb));
     poprzedniUchyb = uchyb;
 
-    // ZAPIS DO ZMIENNYCH (aby można było je pobrać do wykresu)
+
     lastP = uP;
     lastI = uI;
     lastD = uD;
