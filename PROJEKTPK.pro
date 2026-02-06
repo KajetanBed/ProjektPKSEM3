@@ -9,6 +9,7 @@ SOURCES += \
     ARX.cpp \
     GWZ.cpp \
     PID.cpp \
+    TestyJednostkowe.cpp \
     UAR.cpp \
     WarstwaU.cpp \
     qcustomplot.cpp \
@@ -20,6 +21,7 @@ HEADERS += \
     ARX.h \
     GWZ.h \
     PID.h \
+    TestyJednostkowe.h \
     UAR.h \
     WarstwaU.h \
     qcustomplot.h \
